@@ -1,0 +1,16 @@
+% Diagrama de ejemplo: arquitectura por capas dibujada en TikZ con los estilos
+% comunes de main.tex (capa, flecha). Se incluye con \input desde
+% contenido1.tex. Cada diagrama de la memoria va en su propio fichero de esta
+% carpeta.
+
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[capa, minimum width=10cm] (pres) at (0,3.0)
+    {\textbf{Presentación}\\ {\scriptsize Aplicación web y móvil}};
+  \node[capa, minimum width=10cm] (api) at (0,1.5)
+    {\textbf{API / Backend}\\ {\scriptsize Servicios REST y lógica de negocio}};
+  \node[capa, minimum width=10cm] (datos) at (0,0)
+    {\textbf{Persistencia}\\ {\scriptsize Base de datos}};
+
+  \draw[flecha] (pres) -- (api);
+  \draw[flecha] (api) -- (datos);
+\end{tikzpicture}

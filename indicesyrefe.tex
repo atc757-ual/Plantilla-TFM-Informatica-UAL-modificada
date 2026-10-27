@@ -14,7 +14,9 @@
 \tableofcontents
 \listoffigures % indice de figuras
 \listoftables % indice de tablas
-\lstlistoflistings % indice de listados
+\lstlistoflistings % indice de listados: comentarlo si la memoria no incluye
+% bloques de código (listings); si no, genera una página vacía titulada
+% "LISTADOS"
 
 
 
@@ -31,16 +33,19 @@
 % realmente uses en tu memoria, ordenados alfabéticamente. Cada acrónimo
 % debe definirse la primera vez que se usa en el texto, ver capítulo
 % "Ejemplos prácticos de la plantilla".
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|l|l|l}
-
-API & Application Programming Interface & TFG & Trabajo Fin de Grado \\
+% La tabla ocupa el ancho del texto con columnas elásticas (Y, definidas en
+% main.tex) en lugar de \resizebox, que encogía la letra: las descripciones
+% largas hacen salto de línea. Se lee por columnas: primero la pareja de la
+% izquierda y después la de la derecha.
+\noindent
+\begin{tabularx}{\textwidth}{|Y{0.4600}|Y{1.5400}|Y{0.4600}|Y{1.5400}|}
+\hline
+API & \textit{Application Programming Interface} & TFG & Trabajo Fin de Grado \\
 ESI & Escuela Superior de Ingeniería & TFM & Trabajo Fin de Máster \\
-IDE & Integrated Development Environment & UAL & Universidad de Almería \\
-IEEE & Institute of Electrical and Electronics Engineers & UML & Unified Modeling Language \\
-PDF & Portable Document Format & URL & Uniform Resource Locator \\
-
-\end{tabular}
-}
+IDE & \textit{Integrated Development Environment} & UAL & Universidad de Almería \\
+IEEE & \textit{Institute of Electrical and Electronics Engineers} & UML & \textit{Unified Modeling Language} \\
+PDF & \textit{Portable Document Format} & URL & \textit{Uniform Resource Locator} \\
+\hline
+\end{tabularx}
 %\addcontentsline{toc}{section}{ABREVIATURAS}
 

@@ -22,7 +22,9 @@
 %---------------------------------------------------------------------------
 % Para las imagenes
 
-\usepackage[dvips]{graphicx}
+% Sin la opción dvips: con pdflatex (o latexmk -pdf) no hace falta y puede
+% dar problemas con las imágenes PDF/PNG
+\usepackage{graphicx}
 \graphicspath{{Figuras/}} % se fija el camino para las figuras
 \usepackage{rotating}  %para poder rotar las figuras
 \usepackage{wrapfig}
@@ -36,19 +38,19 @@
 \captionsetup{font=small,labelfont=bf} % para tamaño y tipo fuentes pie de foto
 \usepackage{multirow} % para las tablas unir columnas
 \usepackage{multicol} %para escribir en multiples columnas
+\usepackage{tabularx} %tablas ajustadas al ancho del área de texto
+\usepackage{array}
 
 % Referencias y biblio
 
 \usepackage{pdfpages}
-%\usepackage[pdftex,breaklinks=true,hidelinks]{hyperref} % para referencias/indice en pdf
+% hyperref se carga al final del preámbulo (justo antes de \begin{document}).
+% url se carga aquí porque UAL.sty usa \UrlBreaks (antes lo traía hyperref).
+\usepackage{url}
 
-\usepackage[
-breaklinks=true,colorlinks=true,
-linkcolor=blue,urlcolor=blue,citecolor=blue,% PDF VIEW
-linkcolor=black,urlcolor=black,citecolor=black,% PRINT
-bookmarks=true,bookmarksopenlevel=2]{hyperref}
-\usepackage{hyperref}
-\usepackage{emptypage}
+% emptypage solo actúa con twoside (vacía las páginas en blanco que deja
+% \cleardoublepage). Con oneside no hace nada: descomentar junto con twoside.
+%\usepackage{emptypage}
 \usepackage{ragged2e} %Justificacion
 
 %\usepackage[toc,title,page]{appendix}
@@ -71,6 +73,70 @@ bookmarks=true,bookmarksopenlevel=2]{hyperref}
 
 \usepackage{UAL}
 
+% Librerías de TikZ para dibujar los diagramas como vectores (ver la carpeta
+% diagramas/ y el ejemplo del capítulo de ejemplos prácticos)
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds,shapes.geometric,shapes.multipart}
+
+% Estilos comunes de los diagramas, en el azul de la plantilla (Color2): así
+% todos los diagramas de la memoria tienen el mismo aspecto
+\tikzset{
+  % --- bloques y capas (arquitectura) ---
+  bloque/.style={draw=Color2, fill=Color2!6, rounded corners=2pt, align=center,
+                 font=\footnotesize, inner sep=4pt, minimum height=1.0cm},
+  subbloque/.style={draw=Color2!60, fill=white, rounded corners=1pt, align=center,
+                    font=\scriptsize, inner sep=3pt, minimum height=0.75cm},
+  rotulo/.style={font=\footnotesize\bfseries, text=Color2, anchor=north west},
+  capa/.style={draw=Color2, fill=Color2!6, rounded corners=2pt, align=left,
+               font=\footnotesize, inner sep=5pt},
+  flecha/.style={-{Latex[length=2mm]}, draw=Color2, thick},
+  flechad/.style={-{Latex[length=2mm]}, draw=Color2, thick, dashed},
+  % --- diagramas de secuencia ---
+  participante/.style={draw=Color2, fill=Color2!8, rounded corners=1pt, align=center,
+    font=\scriptsize, text width=1.78cm, minimum height=0.60cm, inner sep=1pt, line width=0.5pt},
+  linea/.style={draw=Color2!45, dashed, line width=0.4pt},
+  msg/.style={-{Latex[length=1.7mm]}, draw=Color2, line width=0.55pt},
+  ret/.style={-{Latex[length=1.7mm]}, draw=Color2!85, dashed, line width=0.5pt},
+  etq/.style={above, fill=white, inner sep=1.2pt, font=\scriptsize, align=center},
+  frag/.style={draw=Color2!70, fill=Color2!3, rounded corners=2pt, line width=0.45pt},
+  fragtab/.style={draw=Color2!70, fill=white, font=\scriptsize, inner sep=2pt,
+    anchor=south west, rounded corners=1pt, line width=0.45pt},
+  % --- diagramas de actividad ---
+  actividad/.style={draw=Color2, fill=Color2!10, rounded corners=6pt, align=center,
+    font=\scriptsize, text width=3.05cm, minimum height=0.55cm, inner sep=3pt, line width=0.5pt},
+  decision/.style={draw=Color2, fill=Color2!10, diamond, aspect=2.4, align=center,
+    font=\scriptsize, inner sep=1pt, line width=0.5pt},
+  flujo/.style={-{Latex[length=1.6mm]}, draw=Color2, line width=0.5pt},
+  etqf/.style={font=\scriptsize, fill=white, inner sep=1pt},
+  fin/.style={draw=Color2, line width=0.6pt, circle, minimum size=0.22cm, inner sep=0pt},
+  % --- estados, entidad-relación, despliegue y componentes ---
+  estado/.style={draw=Color2, fill=Color2!8, rounded corners=8pt, minimum width=2.35cm,
+    minimum height=0.85cm, align=center, font=\small},
+  entidad/.style={draw=Color2, fill=Color2!6, rounded corners=2pt, align=center,
+    font=\footnotesize, inner sep=3pt, minimum width=3.35cm},
+  rel/.style={draw=Color2!80, line width=0.5pt},
+  etqr/.style={font=\scriptsize, fill=white, inner sep=1pt, text=Color2},
+  nodo/.style={draw=Color2, fill=Color2!6, rounded corners=2pt, align=center,
+    font=\footnotesize, inner sep=4pt, minimum height=1.0cm},
+  componente/.style={draw=Color2, fill=Color2!8, rounded corners=2pt, align=center,
+    font=\scriptsize, inner sep=3pt, minimum height=0.70cm},
+  dep/.style={-{Latex[length=1.5mm]}, draw=Color2!75, line width=0.45pt, dashed},
+  % --- diagramas de clases (UML): clase, enumeración y relaciones ---
+  clase/.style={rectangle split, rectangle split parts=3, draw=Color2, line width=0.5pt,
+    rectangle split part fill={Color2!12,white,white}, font=\scriptsize,
+    inner sep=2.2pt, align=left, anchor=north},
+  clase/.default={},
+  enumeracion/.style={rectangle split, rectangle split parts=2, draw=Color2, line width=0.5pt,
+    rectangle split part fill={Color2!12,white}, font=\scriptsize,
+    inner sep=2.2pt, align=left, anchor=north},
+  enumeracion/.default={},
+  asoc/.style={draw=Color2, line width=0.5pt, -{Straight Barb[length=1.6mm,width=2.2mm]}},
+  asocbi/.style={draw=Color2, line width=0.5pt, {Straight Barb[length=1.6mm,width=2.2mm]}-{Straight Barb[length=1.6mm,width=2.2mm]}},
+  compos/.style={draw=Color2, line width=0.5pt,
+    {Diamond[fill=Color2,length=2.8mm,width=1.8mm]}-{Straight Barb[length=1.6mm,width=2.2mm]}},
+  gen/.style={draw=Color2, line width=0.5pt, -{Triangle[open,fill=white,length=2.6mm,width=2.8mm]}},
+  rol/.style={font=\tiny, text=Color2!90!black, inner sep=1pt},
+}
+
 %\usepackage[print,doble]{UAL}
 \usepackage{codigo}
 
@@ -81,6 +147,14 @@ bookmarks=true,bookmarksopenlevel=2]{hyperref}
 \usepackage{textcomp} %para completar los signos válidos
 \usepackage{eurosym} %simbolo del euro [\euro]
 \usepackage[bottom]{footmisc}
+
+% Columnas elásticas para que las tablas descriptivas aprovechen el ancho
+% disponible entre márgenes y envuelvan el texto sin desbordarse. El número
+% es la proporción del ancho de cada columna (deben sumar tantas como
+% columnas Y/Z haya): p. ej. {Y{0.6} Y{1.4}} para dos columnas, la segunda
+% más ancha. Y alinea a la izquierda y Z a la derecha
+\newcolumntype{Y}[1]{>{\hsize=#1\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X}
+\newcolumntype{Z}[1]{>{\hsize=#1\hsize\linewidth=\hsize\RaggedLeft\arraybackslash}X}
 
 
 
@@ -102,6 +176,47 @@ INFORMÁTICA\\  ÁREA DE [ÁREA DE CONOCIMIENTO]}
 \pagestyle{cab}
 
 \usepackage{enumitem}
+
+% Las listas de figuras y tablas siguen el mismo patrón de las entradas
+% de capítulo del índice general: mismo interlineado, parskip y separación
+% automática entre capítulos. Se ajusta solo el ancho para las etiquetas.
+\makeatletter
+\renewcommand*{\l@figure}[2]{%
+  \@dottedtocline{1}{1.5em}{2.4em}{#1}{#2}}
+\renewcommand*{\l@table}[2]{%
+  \@dottedtocline{1}{1.5em}{2.4em}{#1}{#2}}
+% El valor por defecto de book para \l@section reserva 2.3em al número, que
+% es insuficiente a partir del capítulo 10 ("10.1." ocupa más): el título
+% queda pegado al número ("10.1.Visión general"). Se ensancha la caja del
+% número y se desplazan en consecuencia los niveles inferiores.
+\renewcommand*{\l@section}[2]{%
+  \@dottedtocline{1}{1.5em}{3.2em}{#1}{#2}}
+\renewcommand*{\l@subsection}[2]{%
+  \@dottedtocline{2}{4.7em}{3.6em}{#1}{#2}}
+\renewcommand*{\l@subsubsection}[2]{%
+  \@dottedtocline{3}{8.3em}{4.3em}{#1}{#2}}
+\makeatother
+
+% Los títulos de sección usan \scshape (definido en UAL.sty) y algunos
+% contienen \textit. Helvetica no tiene el juego negrita-versalita-cursiva
+% (T1/phv/b/scit), así que LaTeX avisaba en cada uno de esos títulos. Se
+% declara la sustitución de forma explícita: el resultado visual es el mismo,
+% pero el registro de compilación queda limpio. Hay que forzar antes la carga
+% del descriptor de la familia (t1phv.fd) o la declaración no encuentra phv.
+\AtBeginDocument{%
+  \sbox0{\fontfamily{phv}\selectfont x}%
+  \DeclareFontShape{T1}{phv}{b}{scit}{<->ssub*phv/b/it}{}%
+}
+
+% hyperref debe ser de los últimos paquetes en cargarse, porque redefine
+% comandos de otros (footmisc, enumitem, longtable, titlesec...). Antes se
+% cargaba dos veces, y la segunda vez anulaba las opciones de la primera.
+% Enlaces activos (se puede hacer clic) pero en negro, para imprimir. Para la
+% versión digital con enlaces en color, cambiar los tres "black" por "blue".
+\usepackage[
+breaklinks=true,colorlinks=true,
+linkcolor=black,urlcolor=black,citecolor=black,
+bookmarks=true,bookmarksopenlevel=2]{hyperref}
 
 \begin{document}
 \frontmatter
@@ -136,9 +251,13 @@ Quiero expresar mi agradecimiento a ...
 
 \input{contenido1}
 
-
-
- \addcontentsline{toc}{section}{BIBLIOGRAFÍA }
+% La bibliografía como capítulo del índice. El \cleardoublepage +
+% \phantomsection son necesarios: \bibliography abre página nueva, así que
+% sin ellos la entrada del índice apuntaba a la última página del capítulo
+% anterior y quedaba anidada como sección de ese capítulo.
+ \cleardoublepage
+ \phantomsection
+ \addcontentsline{toc}{chapter}{Bibliografía}
  \bibliography{referencias}
 
 \appendix
