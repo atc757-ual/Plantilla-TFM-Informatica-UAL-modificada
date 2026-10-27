@@ -56,6 +56,19 @@ Cuando se quieren mostrar varias imágenes relacionadas de forma conjunta se pue
 
 Cada subfigura se referencia igual que una figura normal: la figura~\ref{fig:sub-modulos} muestra los módulos del sistema, mientras que la figura~\ref{fig:subfiguras} agrupa ambas.
 
+\subsection{Diagramas vectoriales con TikZ}
+
+Los diagramas (arquitectura, UML, entidad-relación, secuencia, actividad\ldots) se pueden dibujar directamente en LaTeX con TikZ: se ven nítidos a cualquier tamaño y el texto se puede buscar en el PDF. La plantilla define en \texttt{main.tex} unos estilos comunes en el azul de la portada (\texttt{capa}, \texttt{bloque}, \texttt{flecha}, \texttt{clase}, \texttt{entidad}, \texttt{participante}, \texttt{actividad}\ldots), de modo que todos los diagramas tienen el mismo aspecto. Cada diagrama va en su propio fichero de la carpeta \texttt{diagramas/} y se incluye con \lstinline[language=enparrafo]!\input!, como el de la figura~\ref{fig:tikz-capas}.
+
+Si el pie de una figura es largo, conviene darle una versión corta entre corchetes (\lstinline[language=enparrafo]!\caption[corto]{largo}!): el índice de figuras muestra la corta y la figura, la larga.
+
+\begin{figure}[H]
+  \centering
+  \input{diagramas/ejemplo-capas}
+  \caption[Diagrama de capas en TikZ]{Diagrama de capas dibujado en TikZ con los estilos comunes de la plantilla. El índice de figuras muestra solo el título corto.}
+  \label{fig:tikz-capas}
+\end{figure}
+
 \section{Tablas}
 \label{sec:tablas}
 
