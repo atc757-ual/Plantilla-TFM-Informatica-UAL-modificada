@@ -45,8 +45,16 @@
 
 \usepackage{pdfpages}
 % hyperref se carga al final del preámbulo (justo antes de \begin{document}).
-% url se carga aquí porque UAL.sty usa \UrlBreaks (antes lo traía hyperref).
-\usepackage{url}
+% xurl (que incluye url) se carga aquí porque UAL.sty usa \UrlBreaks (antes
+% lo traía hyperref); además deja partir las URL por cualquier carácter, así
+% una dirección larga no se sale del margen.
+\usepackage{xurl}
+
+% Justificación más fina (pdflatex): microtype ajusta un poco el espaciado y
+% el ancho de las letras, y \emergencystretch da un último margen de espacio
+% antes de dejar que una línea se salga (rutas en \texttt, palabras largas...)
+\usepackage{microtype}
+\setlength{\emergencystretch}{3em}
 
 % emptypage solo actúa con twoside (vacía las páginas en blanco que deja
 % \cleardoublepage). Con oneside no hace nada: descomentar junto con twoside.

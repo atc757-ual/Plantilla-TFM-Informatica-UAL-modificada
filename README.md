@@ -23,7 +23,8 @@ Requiere una distribución TeX Live o MiKTeX completa (usa, entre otros, `titles
 | Cambio | Por qué |
 |---|---|
 | `hyperref` se carga una sola vez y al final del preámbulo | Se cargaba dos veces y demasiado pronto: la segunda carga anulaba las opciones de la primera, y `hyperref` debe ir después de los paquetes cuyos comandos redefine (`titlesec`, `longtable`, `enumitem`, `footmisc`…). Enlaces activos en negro (para imprimir); para la versión digital basta cambiar `black` por `blue`. |
-| `url` se carga por separado | `UAL.sty` usa `\UrlBreaks`, que antes llegaba a través de `hyperref`. |
+| `xurl` (que incluye `url`) se carga por separado | `UAL.sty` usa `\UrlBreaks`, que antes llegaba a través de `hyperref`. Además, `xurl` deja partir las URL por cualquier carácter, así una dirección larga no se sale del margen. |
+| `microtype` y `\emergencystretch=3em` | Justificación más fina: ajustan un poco el espaciado y el ancho de las letras y, como último recurso, el espacio entre palabras, antes de dejar que una línea se salga del margen (rutas en `\texttt`, palabras largas…). |
 | `graphicx` sin la opción `dvips` | No es compatible con `pdflatex`, que es como se compila la plantilla. |
 | `emptypage` comentado | Solo tiene efecto con `twoside`; con `oneside` no hace nada. Se indica que se descomente junto con `twoside`. |
 | Columnas elásticas `Y` y `Z` (`tabularx` + `array`) | Para que las tablas descriptivas ocupen el ancho del texto y hagan salto de línea en lugar de desbordarse o encogerse. |
@@ -52,4 +53,4 @@ Requiere una distribución TeX Live o MiKTeX completa (usa, entre otros, `titles
 
 ### Resultado
 
-Con estos cambios la plantilla compila sin errores y con la mitad de cajas desbordadas que la original (las que quedan están en el texto de ejemplo de URLs largas).
+Con estos cambios la plantilla compila sin errores y **sin ninguna línea que se salga del margen** (avisos `Overfull \hbox`): la original tenía 8. Cuatro se corrigen en la portada, la contraportada y la tabla de abreviaturas; las otras cuatro (URL, rutas y comandos largos del texto de ejemplo), con `xurl`, `microtype` y `\emergencystretch`, que también protegen el texto que escriba cada alumno.
